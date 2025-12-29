@@ -9,19 +9,26 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "ethers": "^6.16.0",
+    "hardhat": "^3.1.1",
     "next": "16.1.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "web3modal": "^1.9.12"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-ignition": "^3.0.6",
+    "@nomicfoundation/hardhat-toolbox-viem": "^5.0.1",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^22.8.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "forge-std": "foundry-rs/forge-std#v1.9.4",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "~5.8.0",
+    "viem": "^2.30.0"
   },
   "ignoreScripts": [
     "sharp",
@@ -30,5 +37,6 @@
   "trustedDependencies": [
     "sharp",
     "unrs-resolver"
-  ]
+  ],
+  "type": "module"
 }
