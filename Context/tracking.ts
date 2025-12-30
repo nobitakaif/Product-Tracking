@@ -87,5 +87,87 @@ const getShimentCount = async ()=>{
 }
 
 const completeShipment = async (completeShip:any)=>{
+    console.log(completeShip)
+    const { receiver, index } = completeShip
+    try{
+        if(!window.ethereum) return "Install MetaMask"
+        const account = await window.ethereum.requests({
+            method : "eth_accounts"
+        })
+        const web3Modal = new Web3Model()
+        const connection = await web3Modal.connect()
+        const provider = new ethers.AnkrProvider()._getProvider(connection)
 
+        const signer = new ethers.AnkrProvider().getSigner()
+        const contract = fetchContract(signer)
+        
+        const transaction = await contract.completeShipment(
+            account[0],
+            receiver,
+            index,
+            {
+                gasLimit : 300000,
+            }
+        )
+        transaction.wait()
+        console.log(transaction)
+    }catch(e){
+        console.error("wrong compeleteShiment", e)
+    }
 }
+
+const getShiment = async (index:any)=>{
+    console.log(index *1)
+    try{
+        if(!window.ethereum)return "Insall MetaMask"
+        const account =await window.ethereum.requests({
+            method : "eth_accounts",
+        })
+
+        const provider = new ethers.PocketProvider()
+        const contract = fetchContract(provider)
+        const shipment = await contract.getSipment(account[0], index * 1)
+
+        const SingleShiment = {
+            sender : shipment[0],
+            receiver : shipment[1],
+            pickUpTime : shipment[2].toNumber(),
+            delvieryTime : shipment[3].toNumber(),
+            distance : shipment[4].toNumber(),
+            price : ethers.formatEther(shipment[5].toString()),
+            status : shipment[6],
+            isPaid : shipment[7]
+        }
+        return SingleShiment
+    }catch(e){
+        console.log("Sorry no shipment")
+    }
+} 
+
+const startShipment = async (getProduct:any)=>{
+    const { receiver, index } = getProduct()
+
+    try{
+        if(!window.ethereum){
+            return "Install MetaMask"
+        }
+        const account = await window.ethereum.requests({
+            method : "eth_account"
+        })
+        const web3Modal = new Web3Model()
+        const connection = await web3Modal.connect()
+        const provider = new ethers.AnkrProvider()._getProvider(connection)
+        const signer = new ethers.AnkrProvider().getSigner();
+        const contract = fetchContract(signer);
+        const shipment = await contract.startShipment(
+            account[0],
+            receiver[0],
+            index *1
+        )
+        shipment.wait()
+        console.log(shipment)
+    }catch(e){
+        console.log("Sorry not shipment ", e)
+    }
+}
+// console.log(new ethers.PocketProvider())
