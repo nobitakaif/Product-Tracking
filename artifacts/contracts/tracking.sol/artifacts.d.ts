@@ -15,7 +15,7 @@ export interface Tracking$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/tracking.sol";
-  readonly buildInfoId: "solc-0_8_28-6830d596f1636a5ffbd10deea1cce13409b8b858";
+  readonly buildInfoId: "solc-0_8_28-050992371ad5f798940ea17d37616b450ac021ce";
 };
 
 import "hardhat/types/artifacts";
