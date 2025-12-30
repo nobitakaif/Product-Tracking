@@ -1,6 +1,9 @@
+"use client"
 import React,{useState, useEffect} from "react";
 import Web3Model from "web3modal"
 import { ethers } from "ethers"
+
+
 
 //INTERNAL IMPORTS
 import tracking from "./Tracking.json"
@@ -14,7 +17,19 @@ const fetchContract = (signerOrProvider :any) =>{
     return new ethers.Contract
     (ContractAddress, ContractABI, signerOrProvider)
 }
-export const TrackingContext = React.createContext()
+
+interface TrackingContextType {
+  connectWallet: () => Promise<string | undefined>;
+  createShipment: (items: any) => Promise<void>;
+  getAllShipment: () => Promise<any>;
+  completeShipment: (completeShip: any) => Promise<String | undefined>;
+  getShiment: (index: any) => Promise<any>;
+  startShipment: (getProduct: any) => Promise<String | undefined>;
+  getShimentCount: () => Promise<any>;
+  DappName: string;
+  currentUser: string;
+}
+export const TrackingContext = React.createContext<TrackingContextType | undefined>(undefined)
 
 export const TrackingProvider = ({children}:any) =>{
     //STATE VARIABLE
@@ -86,7 +101,7 @@ export const TrackingProvider = ({children}:any) =>{
         }
     }
 
-    const completeShipment = async (completeShip:any)=>{
+    const completeShipment = async (completeShip:any):Promise<String | undefined>=>{
         console.log(completeShip)
         const { receiver, index } = completeShip
         try{
@@ -144,7 +159,7 @@ export const TrackingProvider = ({children}:any) =>{
         }
     } 
 
-    const startShipment = async (getProduct:any)=>{
+    const startShipment = async (getProduct:any): Promise<String | undefined>=>{
         const { receiver, index } = getProduct()
 
         try{
@@ -200,26 +215,24 @@ export const TrackingProvider = ({children}:any) =>{
             return "Something went wrong"
         }
     }
-    useEffect(()=>{
-        checkIfWalletConnected()
-    },[])
-    return (
-        <TrackingContext.Provider
-            value={{
-                connectWallet,
-                createShipment,
-                getAllShipment,
-                completeShipment,
-                getShiment,
-                startShipment,
-                getShimentCount,
-                DappName,
-                currentUser,
-            }}
-        >
-            {children}
-        </TrackingContext.Provider>
-        
-
+        useEffect(()=>{
+            checkIfWalletConnected()
+        },[])
+        return (
+            <TrackingContext.Provider
+                value={{
+                    connectWallet,
+                    createShipment,
+                    getAllShipment,
+                    completeShipment,
+                    getShiment,
+                    startShipment,
+                    getShimentCount,
+                    DappName,
+                    currentUser,
+                }}
+            >
+                {children}
+            </TrackingContext.Provider>
     )
 }
