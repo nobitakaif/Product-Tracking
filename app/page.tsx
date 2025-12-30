@@ -1,9 +1,17 @@
-import Image from "next/image";
+
+import { TrackingProvider } from "@/Context/tracking"
+
+import { Navbar, Footer } from "@/Components"
+import DAshboard from "@/Components/Dashboard"
 
 export default function Home() {
   return(
     <>
-      <div className="bg-yellow-500 h-screen w-full"> hii </div>
+    <TrackingProvider>
+      <Navbar/>
+      <DAshboard/>
+      </TrackingProvider>
+      <Footer/>
     </>
   )
 }
