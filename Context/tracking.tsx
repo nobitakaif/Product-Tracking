@@ -208,8 +208,8 @@ export const TrackingProvider = ({children}:any) =>{
         try{
             if(!window.ethereum)return "Install MetaMask"
             const account = await window.ethereum.request({
-                method : "eth_requestAccount",
-            })
+                method: "eth_requestAccounts",
+                });
             setCurrentUser(account[0])
         }catch(e){
             return "Something went wrong"
